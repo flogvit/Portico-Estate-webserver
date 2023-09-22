@@ -7,7 +7,7 @@ LABEL maintainer="Sigurd Nes <sigurdne@online.no>"
 RUN apt update
 
 # php8.2
-RUN apt-get install -y libaio1 locales libcurl
+RUN apt-get install -y libaio1 locales curl
 RUN docker-php-ext-install mysqli pdo pdo_mysql curl intl pgsql gd xsl imap soap zip mbstring && a2enmod rewrite
 RUN apt-get install -y apg
 
