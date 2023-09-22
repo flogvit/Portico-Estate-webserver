@@ -37,27 +37,6 @@ RUN apt-get install -y sudo
 # REDIS (php 8.2)
 # https://askubuntu.com/questions/1433463/php8-1-redis-module-for-ubuntu-20-04
 
-
-# MSSQL-support
-
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
-RUN curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
-# optional: for bcp and sqlcmd
-RUN ACCEPT_EULA=Y apt-get install -y mssql-tools18
-
-# Temorary workaround to install sqlsrv
-# https://stackoverflow.com/questions/75424070/docker-unixodbc-h-no-such-file-or-directory-pecl-install-sqlsrv-error-with-u
-# RUN apt-get install unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
-RUN apt-get install -y unixodbc
-RUN apt-get install -y unixodbc-dev
-RUN pecl install sqlsrv
-RUN pecl install pdo_sqlsrv
-RUN printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.2/mods-available/sqlsrv.ini
-RUN printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini
-RUN phpenmod -v 8.2 sqlsrv pdo_sqlsrv
-
 RUN locale-gen --purge en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
