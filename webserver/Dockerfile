@@ -4,35 +4,17 @@
 
 FROM php:8.2-apache
 LABEL maintainer="Sigurd Nes <sigurdne@online.no>"
+RUN apt update
 
 # php8.2
-
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-#RUN apt-get install -y language-pack-en-base
-#ENV LC_ALL en_US.UTF-8
-RUN add-apt-repository -y ppa:ondrej/php
-RUN add-apt-repository -y ppa:ondrej/apache2
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN apt-get -y upgrade
-RUN apt-get install -y apt-utils
-RUN apt-get install -y supervisor
-RUN apt-get install -y apache2
-RUN apt-get install -y mysql-client-core-8.0
-RUN apt-get install -y libapache2-mod-php8.2 \
-	php8.2 php8.2-curl php8.2-intl \
+RUN docker-php-ext-install mysqli pdo pdo_mysql && a2enmod rewrite
+RUN apt-get install -y php8.2-curl php8.2-intl \
 	php8.2-xdebug php8.2-apcu php8.2-dev \
-	php8.2-xsl php8.2-sybase php8.2-pgsql \
+	php8.2-xsl php8.2-pgsql \
 	php8.2-gd php8.2-imagick php8.2-imap php8.2-redis \
 	php8.2-soap php8.2-zip php8.2-mbstring php-pear \
 	libaio1 locales
-RUN apt-get install -y php8.2-mysql
-RUN apt-get install -y git
-RUN apt-get install -y less vim-tiny
 RUN apt-get install -y apg
-RUN apt-get install -y sudo
 
 # REDIS (php 8.2)
 # https://askubuntu.com/questions/1433463/php8-1-redis-module-for-ubuntu-20-04
