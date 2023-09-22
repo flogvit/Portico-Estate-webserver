@@ -7,13 +7,8 @@ LABEL maintainer="Sigurd Nes <sigurdne@online.no>"
 RUN apt update
 
 # php8.2
-RUN docker-php-ext-install mysqli pdo pdo_mysql && a2enmod rewrite
-RUN apt-get install -y php8.2-curl php8.2-intl \
-	php8.2-xdebug php8.2-apcu php8.2-dev \
-	php8.2-xsl php8.2-pgsql \
-	php8.2-gd php8.2-imagick php8.2-imap php8.2-redis \
-	php8.2-soap php8.2-zip php8.2-mbstring php-pear \
-	libaio1 locales
+RUN docker-php-ext-install mysqli pdo pdo_mysql curl intl xdebug apcu dev sxl pgsql gd imagick imap redis soap zip mbstring pear && a2enmod rewrite
+RUN apt-get install -y libaio1 locales
 RUN apt-get install -y apg
 
 # REDIS (php 8.2)
