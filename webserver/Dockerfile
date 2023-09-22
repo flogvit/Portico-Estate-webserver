@@ -2,7 +2,7 @@
 # Apache/php-server with xsl, postgres, mysql, mssql
 #
 
-FROM ubuntu:22.04
+FROM php:8.2-apache
 LABEL maintainer="Sigurd Nes <sigurdne@online.no>"
 
 # php8.2
